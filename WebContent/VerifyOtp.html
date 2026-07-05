@@ -1,0 +1,408 @@
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Verify OTP - Book Store</title>
+<link rel="apple-touch-icon" sizes="180x180"
+	href="./favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32"
+	href="./favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="./favicons/favicon-16x16.png">
+<link rel="manifest" href="./favicons/site.webmanifest">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* COMPACT CAPTCHA YELLOW */
+.capbox {
+	background: #ccc2a7;
+	background: linear-gradient(to right, #ccc2a7, #8f8874);
+	border: #5c574b 0px solid;
+	border-width: 2px 2px 2px 20px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	display: inline-block;
+	padding: 5px 8px 5px 8px;
+	border-radius: 4px 4px 4px 4px;
+}
+
+.capbox-inner {
+	font: bold 12px arial, sans-serif;
+	color: #000000;
+	background: rgba(255, 255, 255, 0.30);
+	margin: 0px auto 0px auto;
+	padding: 3px 8px 5px 10px;
+	border-radius: 4px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#CaptchaDiv {
+	color: #000000;
+	font: normal 25px Impact, Charcoal, arial, sans-serif;
+	font-style: italic;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #FFFFFF;
+	user-select: none;
+	display: inline-block;
+	padding: 3px 14px 3px 8px;
+	margin-right: 4px;
+	border-radius: 4px;
+}
+
+#CaptchaInput {
+	border: black 2px solid;
+	margin: 3px 0px 1px 0px;
+	width: 105px;
+}
+
+input {
+	padding: 2px 2px;
+	margin: 2px 0;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+
+.tab {
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+}
+
+.tab td {
+	padding: 10px;
+}
+
+.alert-message {
+	background: #f8d7da;
+	color: #721c24;
+	padding: 10px;
+	border-radius: 5px;
+	margin-bottom: 15px;
+	border: 1px solid #f5c6cb;
+	display: none;
+}
+
+.alert-success {
+	background: #d4edda;
+	color: #155724;
+	border-color: #c3e6cb;
+}
+
+.alert-info {
+	background: #d1ecf1;
+	color: #0c5460;
+	border-color: #bee5eb;
+}
+
+.otp-hint {
+	font-size: 12px;
+	color: #666;
+	margin-top: -5px;
+	margin-bottom: 10px;
+}
+
+.resend-link {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+.resend-link a {
+	color: #28a745;
+	text-decoration: none;
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.resend-link a:hover {
+	text-decoration: underline;
+}
+
+.timer-text {
+	font-size: 12px;
+	color: #ff5722;
+	margin-left: 5px;
+}
+
+.back-link {
+	text-align: center;
+	margin-top: 15px;
+}
+
+.back-link a {
+	color: blue;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+.back-link a:hover {
+	text-decoration: underline;
+}
+
+.otp-input {
+	font-size: 18px;
+	letter-spacing: 5px;
+	text-align: center;
+}
+</style>
+</head>
+<body onload="funload(); getEmailFromUrl(); startTimer();">
+	<header>
+		<nav class="navbar navbar-expand-sm bg-dark">
+			<a class="navbar-brand">
+				<img src="logo.png" alt="Google logo" width="60" height="30px">
+			</a>
+
+			<button style="background-color: white;" class="navbar-toggler"
+				type="button" data-toggle="collapse" data-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><span><a class="nav-link"
+							href="index.html">Home</a></span></li>
+					<li class="nav-item "><span><a class="nav-link active"
+							href="login.html">Login</a></span></li>
+					<li class="nav-item "><span><a class="nav-link"
+							href="CustomerRegister.html">Register</a></span></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<div id="topmid">
+		<h1>Welcome to Online Book Store</h1>
+	</div>
+
+	<form action="verifyOtp" method="post" onsubmit="return validateForm()" id="otpForm">
+		<table class="tab" style="width: 40%">
+			<tr style="color: brown; padding-left: 35%">
+				<td style="text-align: center; font-size: 24px; font-weight: bold;">Verify OTP</td>
+			</tr>
+			<tr>
+				<td><a href="CustomerLogin.html" style="color: blue; font-size: medium;">Back to Login</a></td>
+			</tr>
+			<tr>
+				<td>
+					<div id="errorMsg" class="alert-message"></div>
+					<div id="successMsg" class="alert-message alert-success"></div>
+					<div id="infoMsg" class="alert-message alert-info"></div>
+					
+					<!-- <label for="emailDisplay">Email : </label> 
+					<input type="text" id="emailDisplay" 
+						value="Loading..." 
+						style="width: 100%; background-color: #f5f5f5;" readonly><br /> -->
+					
+					<input type="hidden" name="email" id="emailHidden">
+					
+					<label for="otp">Enter OTP : </label> 
+					<input type="text" name="otp" id="otp"
+						placeholder="Enter 6-digit OTP" 
+						maxlength="6"
+						class="otp-input"
+						style="width: 100%;" required><br />
+					
+					<div class="otp-hint">
+						We have sent a 6-digit One-Time Password to your registered email
+					</div>
+					
+					<div class="resend-link">
+						<span>Didn't receive OTP? </span>
+						<a onclick="resendOtp()">Resend OTP</a>
+						<span class="timer-text" id="timer">(Resend available in 60s)</span>
+					</div>
+					
+					<div class="capbox">
+						<div id="CaptchaDiv">46749</div>
+						<div class="capbox-inner">
+							<input type="hidden" id="txtCaptcha" value="46749"> 
+							<input type="text" name="CaptchaInput" id="CaptchaInput" size="15"
+								placeholder="Enter Captcha"><br>
+						</div>
+					</div>
+					<br />
+					<input class="btn btn-success" type="submit" value="Verify OTP">
+					<br />
+					<div class="back-link">
+						<a href="forgotPassword.html">Wrong email? Try again</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</form>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+
+		// Preloader script
+		var tmp = document.getElementById("loding");
+		function funload() {
+		  loding.style.display = "none";
+		}
+		
+		// Timer variables
+		var timerSeconds = 60;
+		var timerInterval;
+		
+		// Start timer for resend OTP
+		function startTimer() {
+			timerInterval = setInterval(function() {
+				if (timerSeconds <= 0) {
+					clearInterval(timerInterval);
+					document.getElementById('timer').innerHTML = '(Resend available now)';
+					document.getElementById('timer').style.color = '#28a745';
+				} else {
+					timerSeconds--;
+					document.getElementById('timer').innerHTML = '(Resend available in ' + timerSeconds + 's)';
+				}
+			}, 1000);
+		}
+		
+		// Resend OTP function
+		function resendOtp() {
+			var email = document.getElementById('emailHidden').value;
+			var errorMsg = document.getElementById('errorMsg');
+			var infoMsg = document.getElementById('infoMsg');
+			
+			if (timerSeconds > 0) {
+				errorMsg.innerHTML = 'Error: Please wait ' + timerSeconds + ' seconds before requesting another OTP!';
+				errorMsg.style.display = 'block';
+				setTimeout(function() {
+					errorMsg.style.display = 'none';
+				}, 3000);
+				return false;
+			}
+			
+			// Reset timer
+			timerSeconds = 60;
+			startTimer();
+			
+			// Show info message
+			infoMsg.innerHTML = 'New OTP has been sent to ' + email + '!';
+			infoMsg.style.display = 'block';
+			
+			// Hide after 3 seconds
+			setTimeout(function() {
+				infoMsg.style.display = 'none';
+			}, 3000);
+			
+			// Here you can redirect to servlet to resend OTP
+			// window.location.href = 'resendOtp?email=' + encodeURIComponent(email);
+			return false;
+		}
+		
+		// Get email from URL parameter
+		function getEmailFromUrl() {
+			var urlParams = new URLSearchParams(window.location.search);
+			var email = urlParams.get('email');
+			
+			if (email) {
+				document.getElementById('emailDisplay').value = email;
+				document.getElementById('emailHidden').value = email;
+			} else {
+				// If no email in URL, try to get from previous form submission
+				var storedEmail = localStorage.getItem('resetEmail');
+				if (storedEmail) {
+					document.getElementById('emailDisplay').value = storedEmail;
+					document.getElementById('emailHidden').value = storedEmail;
+				}
+			}
+		}
+		
+		// Captcha Script
+		var a = Math.ceil(Math.random() * 9) + '';
+		var b = Math.ceil(Math.random() * 9) + '';
+		var c = Math.ceil(Math.random() * 9) + '';
+		var d = Math.ceil(Math.random() * 9) + '';
+		var e = Math.ceil(Math.random() * 9) + '';
+		var code = a + b + c + d + e;
+		document.getElementById("txtCaptcha").value = code;
+		document.getElementById("CaptchaDiv").innerHTML = code;
+		
+		function ValidCaptcha() {
+			var str1 = removeSpaces(document.getElementById('txtCaptcha').value);
+			var str2 = removeSpaces(document.getElementById('CaptchaInput').value);
+			if (str1 == str2) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		function removeSpaces(string) {
+			return string.split(' ').join('');
+		}
+		
+		// OTP validation function
+		function validateOTP(otp) {
+			// OTP should be exactly 6 digits
+			var otpRegex = /^[0-9]{6}$/;
+			return otpRegex.test(otp);
+		}
+		
+		// Main form validation
+		function validateForm() {
+			var otp = document.getElementById('otp').value;
+			var captchaInput = document.getElementById('CaptchaInput').value;
+			var errorMsg = document.getElementById('errorMsg');
+			
+			// Hide previous messages
+			errorMsg.style.display = 'none';
+			
+			// Check if OTP is empty
+			if (otp == "") {
+				errorMsg.innerHTML = 'Error: Please enter OTP!';
+				errorMsg.style.display = 'block';
+				return false;
+			}
+			
+			// Validate OTP format (6 digits)
+			if (!validateOTP(otp)) {
+				errorMsg.innerHTML = 'Error: Please enter a valid 6-digit OTP!';
+				errorMsg.style.display = 'block';
+				return false;
+			}
+			
+			// Check captcha
+			if (captchaInput == "") {
+				errorMsg.innerHTML = 'Error: Please enter CAPTCHA code!';
+				errorMsg.style.display = 'block';
+				return false;
+			}
+			
+			if (!ValidCaptcha()) {
+				errorMsg.innerHTML = 'Error: Invalid CAPTCHA code!';
+				errorMsg.style.display = 'block';
+				return false;
+			}
+			
+			// If all validations pass, allow form submission to backend
+			return true;
+		}
+		
+		// Restrict OTP input to numbers only
+		document.getElementById('otp').addEventListener('input', function() {
+			this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);
+		});
+		
+		// Add visual feedback for OTP
+		document.getElementById('otp').addEventListener('keyup', function() {
+			if (this.value.length === 6) {
+				this.style.borderColor = 'green';
+			} else {
+				this.style.borderColor = '';
+			}
+		});
+	</script>
+</body>
+</html>

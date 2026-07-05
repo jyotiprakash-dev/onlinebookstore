@@ -1,0 +1,278 @@
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Book Store</title>
+<link rel="apple-touch-icon" sizes="180x180"
+	href="./favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32"
+	href="./favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="./favicons/favicon-16x16.png">
+<link rel="manifest" href="./favicons/site.webmanifest">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" >
+<link rel="stylesheet" href="styles.css">
+<style>
+body.register-page {
+	background: url("Photo.jpg") center center / cover no-repeat fixed;
+	color: #111827;
+	min-height: 100vh;
+}
+
+.register-shell {
+	align-items: flex-start;
+	display: flex;
+	justify-content: center;
+	min-height: calc(100vh - 60px);
+	padding: 24px 0 32px;
+	width: 100%;
+}
+
+.register-card {
+	background: #FFE5CC;
+	border: 1px solid #e8c9aa;
+	border-radius: 8px;
+	box-shadow: 0 18px 45px rgba(15, 23, 42, 0.16);
+	box-sizing: border-box;
+	margin: 0 auto;
+	max-width: 420px;
+	padding: 24px 22px;
+	width: 92%;
+}
+
+.register-heading {
+	margin-bottom: 18px;
+	text-align: left;
+}
+
+.register-heading h1 {
+	color: #111827;
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1.2;
+	margin: 0;
+}
+
+.register-heading p {
+	color: #6b7280;
+	font-size: 0.95rem;
+	line-height: 1.4;
+	margin: 6px 0 0;
+}
+
+.form-field {
+	margin-bottom: 8px;
+}
+
+.form-field label,
+.terms-check label {
+	color: #374151;
+	display: block;
+	font-size: 0.92rem;
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+
+.form-field input,
+.form-field textarea {
+	background: #ffffff;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	color: #111827;
+	font-size: 0.95rem;
+	height: 44px;
+	outline: none;
+	padding: 0 12px;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	width: 100%;
+}
+
+.form-field textarea {
+	line-height: 1.35;
+	overflow: auto;
+	padding-top: 11px;
+	resize: none;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+	color: #9ca3af;
+	font-weight: 300;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+	border-color: #2563eb;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+}
+
+.form-field.has-error input,
+.form-field.has-error textarea,
+.terms-field.has-error .terms-check input {
+	border-color: #dc2626;
+}
+
+.field-error {
+	color: #dc2626;
+	display: block;
+	font-size: 0.78rem;
+	font-weight: 500;
+	line-height: 1.25;
+	margin-top: 4px;
+	min-height: 14px;
+}
+
+.terms-field {
+	margin: 2px 0 12px;
+}
+
+.terms-check {
+	align-items: flex-start;
+	display: flex;
+	gap: 9px;
+}
+
+.terms-check input {
+	accent-color: #2563eb;
+	flex: 0 0 auto;
+	height: 16px;
+	margin-top: 2px;
+	width: 16px;
+}
+
+.terms-check label {
+	line-height: 1.35;
+	margin: 0;
+}
+
+.register-button {
+	background: #2563eb;
+	border: 0;
+	border-radius: 8px;
+	color: #ffffff;
+	cursor: pointer;
+	font-size: 1rem;
+	font-weight: 700;
+	height: 46px;
+	letter-spacing: 0;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+	width: 100%;
+}
+
+.register-button:hover,
+.register-button:focus {
+	background: #1d4ed8;
+	outline: none;
+}
+
+.register-button:active {
+	transform: translateY(1px);
+}
+
+@media (max-width: 480px) {
+	.register-shell {
+		padding: 18px 0 26px;
+	}
+
+	.register-card {
+		padding: 22px 18px;
+		width: 94%;
+	}
+}
+</style>
+</head>
+<body class="register-page" onload="funload()">
+	<header>
+		<nav class="navbar navbar-expand-sm bg-dark">
+				<a class="navbar-brand">
+					<!-- The below line can be an image or a h1, either will work -->
+					<img src="logo.png" alt="Google logo" width="60" height="30px">
+				</a>
+				
+				<button style="background-color:white;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				    <span class="navbar-toggler-icon"></span>
+				 </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">                
+				<ul class="navbar-nav" >
+					<li class="nav-item"><span><a class="nav-link" href="index.html">Home</a></span></li>
+					<li class="nav-item "><span><a class="nav-link" href="login.html">Login</a></span></li>
+					<li class="nav-item "><span><a class="nav-link active" href="CustomerRegister.html">Register</a></span></li>
+				</ul>
+				</div>
+			</nav>
+	</header>
+
+	<main class="register-shell">
+		<form class="register-card" action="userreg" method="post" onsubmit="return validateCustomerRegistration()" novalidate>
+			<div class="register-heading">
+				<h1>Create account</h1>
+				<p>Register to continue to the online book store.</p>
+			</div>
+
+			<div class="form-field" id="EmailField">
+				<label for="Email">Email address</label>
+				<input type="email" name="mailid" id="Email" placeholder="you@example.com" autocomplete="email" aria-describedby="EmailError" required>
+				<small class="field-error" id="EmailError" aria-live="polite"></small>
+			</div>
+
+			<div class="form-field" id="passWordField">
+				<label for="passWord">Password</label>
+				<input type="password" name="password" id="passWord" placeholder="At least 8 characters" autocomplete="new-password" aria-describedby="passWordError" required>
+				<small class="field-error" id="passWordError" aria-live="polite"></small>
+			</div>
+
+			<div class="form-field" id="firstNameField">
+				<label for="firstName">First name</label>
+				<input type="text" name="firstname" id="firstName" placeholder="Enter first name" autocomplete="given-name" aria-describedby="firstNameError" required>
+				<small class="field-error" id="firstNameError" aria-live="polite"></small>
+			</div>
+
+			<div class="form-field" id="lastNameField">
+				<label for="lastName">Last name</label>
+				<input type="text" name="lastname" id="lastName" placeholder="Enter last name" autocomplete="family-name" aria-describedby="lastNameError" required>
+				<small class="field-error" id="lastNameError" aria-live="polite"></small>
+			</div>
+
+			<div class="form-field" id="addressField">
+				<label for="address">Address</label>
+				<textarea name="address" id="address" placeholder="Enter your address" autocomplete="street-address" aria-describedby="addressError" required></textarea>
+				<small class="field-error" id="addressError" aria-live="polite"></small>
+			</div>
+
+			<div class="form-field" id="phnoField">
+				<label for="phno">Mobile number</label>
+				<input type="tel" name="phone" id="phno" placeholder="10-digit mobile number" autocomplete="tel" inputmode="numeric" aria-describedby="phnoError" required>
+				<small class="field-error" id="phnoError" aria-live="polite"></small>
+			</div>
+
+			<div class="terms-field" id="acceptanceField">
+				<div class="terms-check">
+					<input type="checkbox" name="acceptance" id="acceptance" aria-describedby="acceptanceError" required>
+					<label for="acceptance">I accept the Terms &amp; Conditions</label>
+				</div>
+				<small class="field-error" id="acceptanceError" aria-live="polite"></small>
+			</div>
+
+			<button class="register-button" type="submit">Register</button>
+		</form>
+	</main>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" ></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" ></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js"></script>
+	<script src="user-validation.js"></script>
+	<script>
+		// Preloder script
+		var tmp = document.getElementById("loding");
+		function funload() {
+			if (tmp) {
+				tmp.style.display = "none";
+			}
+		}
+	</script>
+
+
+
+</body>
+
+</html>
