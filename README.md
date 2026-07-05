@@ -27,6 +27,7 @@ Online Bookstore Management System using Java Servlets, HTML, CSS, JavaScript, B
 ## Tech Stack
 
 ### Backend
+
 - Java
 - Java Servlets
 - JDBC
@@ -34,12 +35,14 @@ Online Bookstore Management System using Java Servlets, HTML, CSS, JavaScript, B
 - JavaMail API
 
 ### Frontend
+
 - HTML
 - CSS
 - JavaScript
 - Bootstrap
 
 ### Tools
+
 - Git
 - GitHub
 - Maven
@@ -52,6 +55,7 @@ Online Bookstore Management System using Java Servlets, HTML, CSS, JavaScript, B
 ## Project Structure
 
 Backend
+
 ```text
 servlets
 service
@@ -62,6 +66,7 @@ constant
 ```
 
 Frontend
+
 ```text
 WebContent
 CustomerLogin.html
@@ -74,6 +79,7 @@ user-validation.js
 ```
 
 Database
+
 ```text
 setup/CreateDatastore.sql
 src/main/resources/application.properties
@@ -83,23 +89,23 @@ src/main/resources/application.properties
 
 ## Servlet Routes
 
-| Route | Description |
-|-------|-------------|
-| /userreg | Register customer |
-| /userlog | Customer login |
-| /adminlog | Admin/Seller login |
-| /viewbook | View available books |
-| /cart | Manage cart |
-| /checkout | Checkout books |
-| /pay | Process payment |
-| /buys | Generate receipt |
-| /addbook | Add new book |
-| /updatebook | Update book |
-| /removebook | Remove book |
-| /sendOtp | Send password reset OTP |
-| /verifyOtp | Verify OTP |
-| /resetPassword | Reset password |
-| /logout | Logout |
+| Route          | Description             |
+| -------------- | ----------------------- |
+| /userreg       | Register customer       |
+| /userlog       | Customer login          |
+| /adminlog      | Admin/Seller login      |
+| /viewbook      | View available books    |
+| /cart          | Manage cart             |
+| /checkout      | Checkout books          |
+| /pay           | Process payment         |
+| /buys          | Generate receipt        |
+| /addbook       | Add new book            |
+| /updatebook    | Update book             |
+| /removebook    | Remove book             |
+| /sendOtp       | Send password reset OTP |
+| /verifyOtp     | Verify OTP              |
+| /resetPassword | Reset password          |
+| /logout        | Logout                  |
 
 ---
 
@@ -135,15 +141,27 @@ src/main/resources/application.properties
 
 ---
 
-## Admin Dashboard
+## Admin Login
 
-![Admin Dashboard](screenshots/admin-dashboard.png)
+![Admin Login](screenshots/admin-login.png)
+
+---
+
+## Store Book
+
+![Store Book](screenshots/store-book.png)
 
 ---
 
 ## Add Book
 
 ![Add Book](screenshots/add-book.png)
+
+---
+
+## Remove Book
+
+![Remove Book](screenshots/remove-book.png)
 
 ---
 
